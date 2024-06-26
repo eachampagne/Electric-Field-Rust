@@ -1,0 +1,31 @@
+This is a remake of a class project that I did for PHYS 331. The purpose of this project is threefold:
+
+Clarification: there is some ambiguity between the class/struct vector (i.e., the relative of an array), and the mathematical vector. In this document, I refer to the mathematical object unless otherwise specified.
+
+1. To be a refresher on Rust, which I haven't used in a while
+
+2. To practice using version control, since I'm still kind of intimidated by git
+
+3. To address some of the mistakes I made the first time I did this project, and thus demonstrate some of the ways I've improved during the intervening year.
+
+Bonus: look into tests and/or benchmarking, especially since I think cargo has tools for this 
+
+#TODO: problem description
+
+
+
+
+
+I plan to have several versions of this code, to demonstrate the effects of each improvement. 
+
+1. Pretty much the existing code, but implemented in Rust - will show the performance difference between Rust and Python
+
+2. The existing code but with a less ludicrous number of divisions - how many did I really need to get reasonable results? I can have scatter plots with n=1000, 100, 50, and so on until the results are actually noticably worse
+(should probably also graph the errors in the two perpendicular components)
+
+3. Change my vector implementation to one that "lives in" x, y, z, but can be built from a spherical coordinate system, rather than having two separate classes that convert into each other, with propogating precision errors (probably need to rephrase this) 
+
+3. A version that uses someone else's vector implementation. I assume Rust has a 3 vector struct, but I'll have to find out.
+
+4. A version that takes advantage of the rotational symmetry of the problem. Basically, finding an analytic solution to the electric field of a ring of charge (I suspect my textbook just gives me this) and integrating over the rings in the sphere (for various n values). This should have the advantage of analytically showing that the field vanishes in two components, so I can store the nonzero component as a scalar rather than carrying three-vectors around everywhere, and I won't have precision errors in two components that I just drop at the end.
+
