@@ -25,7 +25,10 @@ I plan to have several versions of this code, to demonstrate the effects of each
 
 3. Change my vector implementation to one that "lives in" x, y, z, but can be built from a spherical coordinate system, rather than having two separate classes that convert into each other, with propogating precision errors (probably need to rephrase this) 
 
-3. A version that uses someone else's vector implementation. I assume Rust has a 3 vector struct, but I'll have to find out.
-
 4. A version that takes advantage of the rotational symmetry of the problem. Basically, finding an analytic solution to the electric field of a ring of charge (I suspect my textbook just gives me this) and integrating over the rings in the sphere (for various n values). This should have the advantage of analytically showing that the field vanishes in two components, so I can store the nonzero component as a scalar rather than carrying three-vectors around everywhere, and I won't have precision errors in two components that I just drop at the end.
+
+5. - optional. A version that uses someone else's vector implementation. I assume Rust has a 3 vector struct, but I'll have to find out.
+I found one here: https://docs.rs/vector3d/latest/vector3d/index.html
+For Rust, I don't think that using someone else's struct is necessarily more efficient (processing speed wise) than writing my own. Of course it means that the work is done for me, and probably fairly thoroughly if that person considered it finished enough to publish. I was thinking that, for the Python case, a package specifically for vectors might be written and compiled from C, or otherwise optimized. For instance I think a lot of numpy is actually written in C so it's way more efficent than an equivalent pure Python solution is. I don't actually know how writing Python libraries in C works though.
+Alternatively, I could try writing my own vector implementation in C or C++ and learning how to create libraries for Python from C/C++. I did actually try this once a few years ago, and ran into problems, but maybe it's easier on Linux. 
 
