@@ -1,8 +1,5 @@
 use std::ops;
 
-//Commentary: how much do I care about this being line-for-line? Because right now my operator
-//overloads are more compact than my original code
-
 #[derive(Copy, Clone)]
 pub struct Vector {
     pub x: f32,
@@ -46,7 +43,10 @@ impl ops::Add<Vector> for Vector {
     type Output = Vector;
 
     fn add(self, _rhs: Vector) -> Vector {
-        return Vector{x:self.x+_rhs.x, y:self.y+_rhs.y, z:self.z+_rhs.z};
+        let x:f32 = self.x + _rhs.x; 
+        let y:f32 = self.y + _rhs.y;
+        let z:f32 = self.z + _rhs.z;
+        return Vector{x:x, y:y, z:z};
     }
 }
 
@@ -55,7 +55,10 @@ impl ops::Sub<Vector> for Vector {
     type Output = Vector;
 
     fn sub(self, _rhs: Vector) -> Vector {
-        return Vector{x:self.x-_rhs.x, y:self.y-_rhs.y, z:self.z-_rhs.z};
+        let x:f32 = self.x-_rhs.x;
+        let y:f32 = self.y-_rhs.y;
+        let z:f32 = self.z-_rhs.z;
+        return Vector{x:x, y:y, z:z};
     }
 }
 
@@ -65,7 +68,10 @@ impl ops::Mul<f32> for Vector {
     type Output = Vector;
 
     fn mul(self, _rhs: f32) -> Vector {
-        return Vector{x:self.x*_rhs, y:self.y*_rhs, z:self.z*_rhs};
+        let x:f32 = self.x*_rhs;
+        let y:f32 = self.y*_rhs;
+        let z:f32 = self.z*_rhs;
+        return Vector{x:x, y:y, z:z};
     }
 }
 
@@ -75,7 +81,10 @@ impl ops::Mul<Vector> for f32 {
     type Output = Vector;
 
     fn mul(self, _rhs: Vector) -> Vector {
-        return Vector{x:self*_rhs.x, y:self*_rhs.y, z:self*_rhs.z};
+        let x:f32 = self*_rhs.x;
+        let y:f32 = self*_rhs.y;
+        let z:f32 = self*_rhs.z;
+        return Vector{x:x, y:y, z:z};
     }
 }
 
@@ -99,7 +108,8 @@ impl ops::Mul<f32> for SphereVector {
     type Output = SphereVector;
 
     fn mul(self, _rhs: f32) -> SphereVector {
-        return SphereVector{r:self.r*_rhs, theta:self.theta, phi:self.phi};
+        let newR:f32 = self.r*_rhs;
+        return SphereVector{r:newR, theta:self.theta, phi:self.phi};
     }
 }
 
@@ -109,7 +119,8 @@ impl ops::Mul<SphereVector> for f32 {
     type Output = SphereVector;
 
     fn mul(self, _rhs: SphereVector) -> SphereVector {
-        return SphereVector{r:self*_rhs.r, theta:_rhs.theta, phi:_rhs.phi};
+        let newR:f32 = self*_rhs.r;
+        return SphereVector{r:newR, theta:_rhs.theta, phi:_rhs.phi};
     }
 }
 
