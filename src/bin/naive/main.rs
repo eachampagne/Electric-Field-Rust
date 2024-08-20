@@ -14,4 +14,18 @@ fn main() {
 
     println!("{}", vec_test.mag());
     vec_test.normalize().trace();
+
+    let test_2 = Vector {x:4.0, y:6.0, z:8.0};
+    test_2.trace();
+    
+    (vec_test + test_2).trace();
+    (vec_test-test_2).trace();
+    (test_2+vec_test).trace();
+    (test_2-vec_test).trace();
+    (vec_test*3.0).trace();
+    (3.0*vec_test).trace();
+
+    sphere_test.trace();
+    (5.0*sphere_test).trace();
+    (sphere_test*5.0).trace();
 }
