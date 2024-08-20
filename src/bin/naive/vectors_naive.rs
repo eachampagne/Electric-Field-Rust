@@ -14,8 +14,9 @@ impl Vector {
     //line-by-line replica I guess I'll keep it at least in this version
 
     //Commentary: I believe that technically, the only true "constructor" is the curly brace
-    //syntax. This is simply a function that acts like a constructor. This does allow me to keep
-    //the fields private however, and I think is slightly easier to write out.
+    //syntax (see https://doc.rust-lang.org/nomicon/constructors.html). This is simply a function that
+    //acts like a constructor. This does allow me to keep the fields private however, and I think is
+    //slightly easier to write out.
     pub fn new(x:f32, y:f32, z:f32) -> Vector {
         return Vector{x:x, y:y, z:z};
     }
@@ -38,6 +39,17 @@ impl Vector {
     pub fn mag(&self) -> f32 {
         let magnitude:f32 = f32::sqrt(self.x*self.x+self.y*self.y+self.z*self.z);
         return magnitude;
+    }
+
+    pub fn dot(vect1:Vector, vect2:Vector) -> f32 {
+        return vect1.x * vect2.x + vect1.y * vect2.y + vect1.z * vect2.z;
+    }
+
+    pub fn cross(vect1:Vector, vect2:Vector) -> Vector {
+        let newX = vect1.y * vect2.z - vect1.z * vect2.y;
+        let newY = -(vect1.x * vect2.z - vect1.z * vect2.x);
+        let newZ = vect1.x * vect2.y - vect1.y * vect2.x;
+        return Vector::new(newX, newY, newZ);
     }
 
 }

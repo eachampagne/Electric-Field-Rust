@@ -28,4 +28,11 @@ fn main() {
     sphere_test.trace();
     (5.0*sphere_test).trace();
     (sphere_test*5.0).trace();
+
+    println!("{}", Vector::dot(vec_test, test_2));
+    println!("{}", Vector::dot(test_2, vec_test));
+    
+    Vector::cross(vec_test, test_2).trace();
+    Vector::cross(test_2, vec_test).trace();
+
 }
