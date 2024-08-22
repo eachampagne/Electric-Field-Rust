@@ -1,11 +1,11 @@
 use std::ops;
-use std::f32::consts::PI; 
+use std::f64::consts::PI; 
 
 #[derive(Copy, Clone)]
 pub struct Vector {
-    x: f32,
-    y: f32,
-    z: f32,
+    x: f64,
+    y: f64,
+    z: f64,
 }
 
 impl Vector {
@@ -18,7 +18,7 @@ impl Vector {
     //syntax (see https://doc.rust-lang.org/nomicon/constructors.html). This is simply a function that
     //acts like a constructor. This does allow me to keep the fields private however, and I think is
     //slightly easier to write out.
-    pub fn new(x:f32, y:f32, z:f32) -> Vector {
+    pub fn new(x:f64, y:f64, z:f64) -> Vector {
         return Vector{x:x, y:y, z:z};
     }
 
@@ -78,7 +78,7 @@ impl Vector {
         return spherical;
     }
 
-    pub fn dot(vect1:Vector, vect2:Vector) -> f32 {
+    pub fn dot(vect1:Vector, vect2:Vector) -> f64 {
         return vect1.x * vect2.x + vect1.y * vect2.y + vect1.z * vect2.z;
     }
 
@@ -91,8 +91,8 @@ impl Vector {
 
     //Commentary:
     //I'm not sure offhand how to do fractional powers in Rust
-    pub fn mag(&self) -> f32 {
-        let magnitude:f32 = f32::sqrt(self.x*self.x+self.y*self.y+self.z*self.z);
+    pub fn mag(&self) -> f64 {
+        let magnitude:f64 = f64::sqrt(self.x*self.x+self.y*self.y+self.z*self.z);
         return magnitude;
     }
 
@@ -102,9 +102,9 @@ impl ops::Add<Vector> for Vector {
     type Output = Vector;
 
     fn add(self, _rhs: Vector) -> Vector {
-        let x:f32 = self.x + _rhs.x; 
-        let y:f32 = self.y + _rhs.y;
-        let z:f32 = self.z + _rhs.z;
+        let x:f64 = self.x + _rhs.x; 
+        let y:f64 = self.y + _rhs.y;
+        let z:f64 = self.z + _rhs.z;
         return Vector::new(x, y, z);
     }
 }
@@ -113,33 +113,33 @@ impl ops::Sub<Vector> for Vector {
     type Output = Vector;
 
     fn sub(self, _rhs: Vector) -> Vector {
-        let x:f32 = self.x-_rhs.x;
-        let y:f32 = self.y-_rhs.y;
-        let z:f32 = self.z-_rhs.z;
+        let x:f64 = self.x-_rhs.x;
+        let y:f64 = self.y-_rhs.y;
+        let z:f64 = self.z-_rhs.z;
         return Vector::new(x, y, z);
     }
 }
 
 //Scalar multiplication of form vector * scalar
-impl ops::Mul<f32> for Vector {
+impl ops::Mul<f64> for Vector {
     type Output = Vector;
 
-    fn mul(self, _rhs: f32) -> Vector {
-        let x:f32 = self.x*_rhs;
-        let y:f32 = self.y*_rhs;
-        let z:f32 = self.z*_rhs;
+    fn mul(self, _rhs: f64) -> Vector {
+        let x:f64 = self.x*_rhs;
+        let y:f64 = self.y*_rhs;
+        let z:f64 = self.z*_rhs;
         return Vector::new(x, y, z);
     }
 }
 
 //Scalar multiplication of form scalar * vector
-impl ops::Mul<Vector> for f32 {
+impl ops::Mul<Vector> for f64 {
     type Output = Vector;
 
     fn mul(self, _rhs: Vector) -> Vector {
-        let x:f32 = self*_rhs.x;
-        let y:f32 = self*_rhs.y;
-        let z:f32 = self*_rhs.z;
+        let x:f64 = self*_rhs.x;
+        let y:f64 = self*_rhs.y;
+        let z:f64 = self*_rhs.z;
         return Vector::new(x, y, z);
     }
 }
@@ -150,13 +150,13 @@ impl ops::Mul<Vector> for f32 {
 //Also, I can only assume that my old code used radians, but I didn't write a comment saying so...
 #[derive(Copy, Clone)]
 pub struct SphereVector {
-    r: f32,
-    theta: f32,
-    phi: f32,
+    r: f64,
+    theta: f64,
+    phi: f64,
 }
 
 impl SphereVector {
-    pub fn new(r:f32, theta:f32, phi:f32) -> SphereVector {
+    pub fn new(r:f64, theta:f64, phi:f64) -> SphereVector {
         return SphereVector{r:r, theta:theta, phi:phi};
     }
 
@@ -176,28 +176,28 @@ impl SphereVector {
     }
 
     //Commentary: added this function so I could keep my struct's fields private
-    pub fn mag(&self) -> f32 {
+    pub fn mag(&self) -> f64 {
         return self.r;
     }
 
 }
 
 //Scalar multiplication of form vector * scalar
-impl ops::Mul<f32> for SphereVector {
+impl ops::Mul<f64> for SphereVector {
     type Output = SphereVector;
 
-    fn mul(self, _rhs: f32) -> SphereVector {
-        let newR:f32 = self.r*_rhs;
+    fn mul(self, _rhs: f64) -> SphereVector {
+        let newR:f64 = self.r*_rhs;
         return SphereVector::new(newR, self.theta, self.phi);
     }
 }
 
 //Scalar multiplication of form scalar * vector
-impl ops::Mul<SphereVector> for f32 {
+impl ops::Mul<SphereVector> for f64 {
     type Output = SphereVector;
 
     fn mul(self, _rhs: SphereVector) -> SphereVector {
-        let newR:f32 = self*_rhs.r;
+        let newR:f64 = self*_rhs.r;
         return SphereVector::new(newR, _rhs.theta, _rhs.phi);
     }
 }
