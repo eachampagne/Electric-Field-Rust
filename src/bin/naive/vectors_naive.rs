@@ -52,7 +52,7 @@ impl Vector {
             if self.y > 0.0 { //Quadrant I
                 phi = (self.y/self.x).atan();
             } else if self.y < 0.0 { //Quadrant IV
-                phi = 3.0 * PI * 0.5 + (self.x/-self.y).atan();
+                phi = 3.0 * PI * 0.5 + (self.x/ -self.y).atan();
             } else if self.y == 0.0 { //Positive x-axis
                 phi = 0.0;
             }
@@ -173,6 +173,11 @@ impl SphereVector {
 
     pub fn normalize(&self) -> SphereVector {
         return SphereVector::new(1.0, self.theta, self.phi);
+    }
+
+    //Commentary: added this function so I could keep my struct's fields private
+    pub fn mag(&self) -> f32 {
+        return self.r;
     }
 
 }
