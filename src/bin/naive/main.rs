@@ -35,4 +35,11 @@ fn main() {
     Vector::cross(vec_test, test_2).trace();
     Vector::cross(test_2, vec_test).trace();
 
+    sphere_test.trace();
+    sphere_test.toCartesian().trace();
+    sphere_test.toCartesian().toSpherical().trace();
+
+    vec_test.trace();
+    vec_test.toSpherical().trace();
+    vec_test.toSpherical().toCartesian().trace();
 }

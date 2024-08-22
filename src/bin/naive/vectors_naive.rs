@@ -1,4 +1,5 @@
 use std::ops;
+use std::f32::consts::PI; 
 
 #[derive(Copy, Clone)]
 pub struct Vector {
@@ -34,11 +35,47 @@ impl Vector {
         println!("<{0}, {1}, {2}>", self.x, self.y, self.z);
     }
 
-    //Commentary:
-    //I'm not sure offhand how to do fractional powers in Rust
-    pub fn mag(&self) -> f32 {
-        let magnitude:f32 = f32::sqrt(self.x*self.x+self.y*self.y+self.z*self.z);
-        return magnitude;
+    pub fn toSpherical(&self) -> SphereVector {
+        let r = self.mag();
+        let mut theta = 0.0;
+        let mut phi = 0.0;
+
+        if self.z > 0.0 {
+            theta = (self.z/r).acos();
+        } else if self.z < 0.0 {
+            theta = PI - (-self.z/r).acos();
+        } else if self.z == 0.0 {
+            theta = PI / 2.0;
+        }
+
+        if self.x > 0.0 { //Quadrants I and IV
+            if self.y > 0.0 { //Quadrant I
+                phi = (self.y/self.x).atan();
+            } else if self.y < 0.0 { //Quadrant IV
+                phi = 3.0 * PI * 0.5 + (self.x/-self.y).atan();
+            } else if self.y == 0.0 { //Positive x-axis
+                phi = 0.0;
+            }
+        } else if self.x < 0.0 { //Quadrants II and III
+            if self.y > 0.0 { //Quadrant II
+                phi = PI * 0.5 + (-self.x/self.y).atan();
+            } else if self.y < 0.0 { //Quadrant III
+                phi = PI + (self.y/self.x).atan();
+            } else if self.y == 0.0 { //Negative x-axis
+                phi = PI;
+            }
+        } else if self.x == 0.0 { //Y axis
+            if self.y > 0.0 { //Positive y-axis
+                phi = PI / 2.0;
+            } else if self.y < 0.0 { //Negative y-axis
+                phi = 3.0 * PI / 2.0;
+            } else if self.y == 0.0 { //On the z-axis, i.e., the origin
+                phi = 0.0; //Since this is the origin the angle doesn't really matter, as long as it's defined
+            } 
+        }
+
+        let spherical = SphereVector::new(r, theta, phi);
+        return spherical;
     }
 
     pub fn dot(vect1:Vector, vect2:Vector) -> f32 {
@@ -50,6 +87,13 @@ impl Vector {
         let newY = -(vect1.x * vect2.z - vect1.z * vect2.x);
         let newZ = vect1.x * vect2.y - vect1.y * vect2.x;
         return Vector::new(newX, newY, newZ);
+    }
+
+    //Commentary:
+    //I'm not sure offhand how to do fractional powers in Rust
+    pub fn mag(&self) -> f32 {
+        let magnitude:f32 = f32::sqrt(self.x*self.x+self.y*self.y+self.z*self.z);
+        return magnitude;
     }
 
 }
@@ -100,6 +144,10 @@ impl ops::Mul<Vector> for f32 {
     }
 }
 
+//Commentary: this makes no attempts to constrain the angles to [0, pi) or [0, 2pi) for theta and
+//phi respectively. I suppose everything would still work if they looped over, but that was
+//careless of me.
+//Also, I can only assume that my old code used radians, but I didn't write a comment saying so...
 #[derive(Copy, Clone)]
 pub struct SphereVector {
     r: f32,
@@ -114,6 +162,17 @@ impl SphereVector {
 
     pub fn trace(&self) {
         println!("<{0}, {1}, {2}>", self.r, self.theta, self.phi);
+    }
+
+    pub fn toCartesian(&self) -> Vector {
+        let x = self.r * self.phi.cos() * self.theta.sin();
+        let y = self.r * self.phi.sin() * self.theta.sin();
+        let z = self.r * self.theta.cos();
+        return Vector::new(x, y, z);
+    }
+
+    pub fn normalize(&self) -> SphereVector {
+        return SphereVector::new(1.0, self.theta, self.phi);
     }
 
 }
