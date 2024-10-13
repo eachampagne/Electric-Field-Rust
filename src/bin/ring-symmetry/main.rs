@@ -29,7 +29,7 @@ fn main() {
             //of the relevant constants (epsilon_naught, etc)
             //(I derived this on paper and checked against the Hyperphysics entry, so I used their
             //conventions)
-            //TODO: add link to Hyperphysics
+            //Hyperphysics article: http://hyperphysics.phy-astr.gsu.edu/hbase/electric/potlin.html#c2
             //
             //When integrating over a number of rings, the contribution of each ring becomes
             //dE = (2 * pi * k * r' * z' * sigma * R) / (r'^2 + z'^2)^(3/2) dtheta
@@ -46,6 +46,10 @@ fn main() {
             //
             //TODO: figure out which constants I actually included in the other program
             //I think I'm at least assuming k = 1
+            //Adding a factor of 2 pi worked, apparently sigma and k are set to 1
+            //and I have a sign discrepancy
+            //I'm not actually certain which one is right - I mix up whether electric field lines
+            //point to protons or electrons
             
             let dE = 2.0 * PI * (theta.sin()*(z-theta.cos())) / (z*z-2.0*z*theta.cos()+1.0).powf(1.5) * dtheta;
             E_z += dE;
